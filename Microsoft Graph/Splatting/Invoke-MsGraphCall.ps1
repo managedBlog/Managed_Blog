@@ -1,3 +1,13 @@
+<#
+Name: Invoke-MsGraphCall 
+Author: Sean Bulger, twitter @managed_blog, http://managed.modernendpoint.com
+Version: 0.1 (Really, I don't take myself that seriously...)
+.Synopsis
+   Connects to Microsoft Graph and calls Invoke-RestMethod with passed parameters
+.DESCRIPTION
+   Invoke-MsGraphCall is a function built to call Microsoft Graph and run any approved method.
+#>
+
 #Use a client secret to authenticate to Microsoft Graph using MSAL
 $authparams = @{
     ClientId    = '[App Registration Client ID]'
