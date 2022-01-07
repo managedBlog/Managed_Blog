@@ -16,7 +16,7 @@ $AccessToken = $Auth.AccessToken
 $Serials = Get-Content "C:\Temp\serials.csv"
 
 #If assigning the same group tag to all devices, update this variable
-$NewGroupTag = "Updated-Group-Tag"
+$NewGroupTag = "Updated-Group-Tag-Friday"
 
 #Function to make Microsoft Graph API calls
 Function Invoke-MsGraphCall {
@@ -61,26 +61,21 @@ Function Invoke-MsGraphCall {
 
 }
 
-
-
-#Return all Autopilot device identities
-#Create parameters to use in Invoke-MSGraphCall
-$URI = "https://graph.microsoft.com/beta/deviceManagement/windowsAutopilotDeviceIdentities/"
-$Method = "GET"
-
-#Call Invoke-MsGraphCall
-$MSGraphCall = Invoke-MsGraphCall -AccessToken $AccessToken -URI $URI -Method $Method -Body $Body
-
-#Create list of objects with serialNumber, id, and GroupTag
-$Devices = $MSGraphCall[1].value | Select-Object -Property SerialNumber,id,groupTag
-
 #For each device listed in serial numbers find the associate Autopilot Device ID, and update the group tag
 ForEach($s in $serials){
 
-    $DeviceToUpdate = $Devices | Where-Object serialNumber -eq $s
-    $id = $DeviceToUpdate.id
+    #Return Autopilot Device Identity
+    #Create parameters to use in Invoke-MSGraphCall
+    $URI = "https://graph.microsoft.com/beta/deviceManagement/windowsAutopilotDeviceIdentities/?`$filter=contains(serialNumber,'$s')"
+    $Method = "GET"
 
+    #Call Invoke-MsGraphCall
+    $MSGraphCall = Invoke-MsGraphCall -AccessToken $AccessToken -URI $URI -Method $Method -Body $Body
     
+    #Get device ID to use in Graph Call
+    $Id = $MSGraphCall[1].value.id 
+    
+    #Make POST call to update group tag
     $Body = @{ "groupTag" = "$NewGroupTag" } | ConvertTo-Json  
     $URI  = "https://graph.microsoft.com/v1.0/deviceManagement/windowsAutopilotDeviceIdentities/$id/UpdateDeviceProperties"
     $Method = "POST"
