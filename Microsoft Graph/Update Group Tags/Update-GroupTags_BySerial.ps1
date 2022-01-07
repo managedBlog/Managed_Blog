@@ -9,7 +9,7 @@
 #To use device code to authenticate using the well-known client ID, uncomment lines 10-14. Comment out lines 3-7.
 $authParams = @{
     ClientId = 'd1ddf0e4-d672-4dae-b554-9d5bdfd93547' #Well-known client ID
-    TenantId    = 'modernendpoint.xyz'
+    TenantId    = 'YourTenant.com'
     DeviceCode = $true
 }
 
