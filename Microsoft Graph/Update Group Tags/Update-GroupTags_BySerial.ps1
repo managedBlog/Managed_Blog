@@ -1,10 +1,18 @@
 
-#Use a client secret to authenticate to Microsoft Graph using MSAL
-$authparams = @{
+#To use a client secret to authenticate to Microsoft Graph using MSAL, uncomment lines 3-7 and enter your information. Comment out lines 10-14
+<# $authparams = @{
     ClientId    = '[Your Client Id]'
     TenantId    = 'YourDomain.com'
     ClientSecret = ('[Your Client Secret]' | ConvertTo-SecureString -AsPlainText -Force )
+} #>
+
+#To use device code to authenticate using the well-known client ID, uncomment lines 10-14. Comment out lines 3-7.
+$authParams = @{
+    ClientId = 'd1ddf0e4-d672-4dae-b554-9d5bdfd93547' #Well-known client ID
+    TenantId    = 'modernendpoint.xyz'
+    DeviceCode = $true
 }
+
 
 $auth = Get-MsalToken @authParams
 
@@ -16,7 +24,7 @@ $AccessToken = $Auth.AccessToken
 $Serials = Get-Content "C:\Temp\serials.csv"
 
 #If assigning the same group tag to all devices, update this variable
-$NewGroupTag = "Updated-Group-Tag-Friday"
+$NewGroupTag = "Updated-Group-Tag-Friday-2"
 
 #Function to make Microsoft Graph API calls
 Function Invoke-MsGraphCall {
