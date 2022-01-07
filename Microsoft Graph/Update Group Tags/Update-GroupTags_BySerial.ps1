@@ -6,6 +6,11 @@ $authparams = @{
     ClientSecret = ('[Your Client Secret]' | ConvertTo-SecureString -AsPlainText -Force )
 }
 
+$auth = Get-MsalToken @authParams
+
+#Set Access token variable for use when making API calls
+$AccessToken = $Auth.AccessToken
+
 #Get content of CSV containing serial numbers
 #This should be a single column with no headers
 $Serials = Get-Content "C:\Temp\serials.csv"
