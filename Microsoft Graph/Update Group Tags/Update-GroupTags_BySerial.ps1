@@ -1,4 +1,4 @@
-
+#Script requires MSAL.PS module. Type Install-Module MSAL.PS to install
 #To use a client secret to authenticate to Microsoft Graph using MSAL, uncomment lines 3-7 and enter your information. Comment out lines 10-14
 <# $authparams = @{
     ClientId    = '[Your Client Id]'
