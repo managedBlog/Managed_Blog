@@ -1,3 +1,12 @@
+<#
+Name: Add-AssignmentFilters
+Author: Sean Bulger, twitter @managed_blog, http://managed.modernendpoint.com
+Version: 1.0
+.Synopsis
+   Adds an assignment filter to selected application assignments
+.DESCRIPTION
+   Add-AssignmentFilters is a script designed to allow an administrator to select an existing filter in Microsoft Endpoint Manager and apply it to an application (or applications) that they select from a separate list.
+#>
 #Requires -modules MSAL.ps
 
 [cmdletBinding()]
