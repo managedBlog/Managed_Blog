@@ -1,6 +1,6 @@
 <#
-Name: Update-ManagementName
-Author: Sean Bulger, twitter @managed_blog, http://managed.modernendpoint.com
+Name: Invoke-AdminServiceCall.ps1
+Author: SeantNamen Bulger, twitter @managed_blog, http://managed.modernendpoint.com
 Version: 0.1
 .Synopsis
    This script will run a REST API call against the Configuration Manager Admin Service. It was create specifically for use in Azure Automation. Note: Azure Automation does not handle hashtable parameter input well, so the $Body parameter uses a JSON-like string instead of a hash table. 
