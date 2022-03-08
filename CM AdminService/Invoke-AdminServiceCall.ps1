@@ -1,5 +1,5 @@
 <#
-Name: Update-ManagementName
+Name: Invoke-AdminServiceCall
 Author: Sean Bulger, twitter @managed_blog, http://managed.modernendpoint.com
 Version: 0.1
 .Synopsis
