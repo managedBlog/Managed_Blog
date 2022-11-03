@@ -34,7 +34,6 @@ param(
 #Parse WebHookData to get User list and Device ID
 $Payload = $WebhookData.RequestBody | ConvertFrom-Json
 
-$PType = $Payload.GetType()
 Write-Output "Payload is of type $PType"
 
 if ($Payload) { 
@@ -50,9 +49,6 @@ if ($Payload) {
     }
 
 	$ManagedDeviceID = $RequestObject.ManagedDeviceID
-
-    $ROType = $RequestObject.GetType()
-    $UHType = $UserHash.GetType()
 
     Write-Output "Request object is of type $ROType"
     Write-Output "UserHash is of type $UHType"
@@ -134,13 +130,12 @@ Function Invoke-MsGraphCall {
 $Vals = $UserHash.Values | Measure-Object -Minimum -Maximum
 $TopUser = $UserHash.GetEnumerator() | Where-Object Value -eq $Vals.Maximum
 $TopName = $TopUser.Name
-$TopCount = $TopUser.Value
+[int]$TopCount = $TopUser.Value
 
 Write-Output "User with highest logon count is $TopName. Logon Count is $TopCount."
 
 #Get managed device and check for primary user
 Write-Output "Managed Device ID is $ManagedDeviceID"
-#$ManagedDeviceID = "c0a12dff-8456-41b0-a2a9-3257f3d15cc8"
 $URI = "https://graph.microsoft.com/beta/deviceManagement/managedDevices/$ManagedDeviceID/users"
 $Method = "GET"
 
@@ -160,7 +155,7 @@ If($PrimaryUser){
 
     If($UserHash.ContainsKey($PrimaryUser)){
 
-        $PrimaryCount = $UserList.$PrimaryUser
+        [int]$PrimaryCount = $UserList.$PrimaryUser
 		Write-Output "$PrimaryUser has logged in $PrimaryCount times."
 
     } Else {
@@ -171,7 +166,7 @@ If($PrimaryUser){
 
 	If($PrimaryCount -eq $null){
 
-		$PrimaryCount = 0.5
+		[int]$PrimaryCount = 0.5
 
 	}
 
