@@ -1,0 +1,34 @@
+#Set value for registry key to set
+$RegKeyPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization"
+$RegValName = "LockScreenImage"
+$RegValType = "String"
+$RegValData = "C:\ProgramData\CustomScripts\LoginBlocked.bmp"
+
+
+#Test to see if Edge key exists, if it does not exist create it
+$RegKeyPathExists = Test-Path $RegKeyPath
+if (!$RegKeyPathExists) {
+
+    New-Item -Path $RegKeyPath -Force | Out-Null
+
+}
+
+
+#Check to see if value exists
+Try {
+    
+    $CurrentValue = Get-ItemPropertyValue -Path $RegKeyPath -Name $RegValName 
+
+} Catch {
+
+    #If value does not exist an error would be thrown, catch error and create key
+    Set-ItemProperty -Path $RegKeyPath  -Name $RegValName -Type $RegValType -Value $RegValData -Force
+
+}
+
+#If value exists but data is wrong, set the value to the correct data
+if ($CurrentValue -ne $RegValData) {
+    
+    Set-ItemProperty -Path $RegKeyPath  -Name $RegValName -Type $RegValType -Value $RegValData -Force
+
+}
